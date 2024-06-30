@@ -18,13 +18,6 @@ import {
 } from '@/components/ui/resizable'
 import AdminMenuBar, { LinkProp } from '@/components/AdminMenuBar.vue'
 import Table from '@/components/Table.vue'
-import { UserApi } from '../api/UaerApi'
-
-const userApi = new UserApi();
-
-userApi.getUsers().then((users) => {
-  console.log(users);
-});
 
 const links: LinkProp[] = [
   {

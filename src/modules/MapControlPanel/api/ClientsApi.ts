@@ -10,6 +10,12 @@ export interface Client {
   group_id: number
 }
 
+export interface UpdateClientData {
+  id: number,
+  latitude: number,
+  longitude: number,
+}
+
 export interface ClientCollection extends Client {
 }
 
@@ -25,5 +31,9 @@ export class ClientsApi extends BaseLkPublicApi<Client, ClientCollection> {
   public getClientsByCity(id: number) {
     const data = { group_id: id }
     return this.getListById(data)
+  }
+
+  public updateClients(data: UpdateClientData) {
+    return this.update(data)
   }
 }

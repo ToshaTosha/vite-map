@@ -4,7 +4,6 @@
       <SelectCities />
       <Separator />
       <ClientList />
-      <LoginForm />
       <CoordinatesForm />
     </CardContent>
   </Card>

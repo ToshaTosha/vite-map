@@ -29,7 +29,6 @@
                   file_name = value
                   this.$emit('selected', cityOption)
                   $store.commit('updateCurrentCity', cityOption)
-                  console.log($store.getters.getCurrentCity)
                 }
                 open = false
               }"
@@ -93,21 +92,21 @@ import {
       }
     },
     created() {
-        this.fetchOptions()
+      this.fetchOptions()
     },
     methods: {
-        async fetchOptions () {
-            try {
-                const api = new CitiesApi()
-                const response = await api.getAll()
-                this.cityOptions = response.data
-            } catch (error) {
-                console.error(error);
-            }
-        },
-        cn(...inputs) {
-            return twMerge(clsx(inputs));
+      async fetchOptions () {
+        try {
+          const api = new CitiesApi()
+          const response = await api.getAll()
+          this.cityOptions = response.data
+        } catch (error) {
+          console.error(error);
         }
+      },
+      cn(...inputs) {
+        return twMerge(clsx(inputs));
+      }
     },
   }
 </script>

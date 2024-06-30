@@ -1,5 +1,3 @@
-/* eslint @typescript-eslint/member-ordering: 0 */
-/* eslint max-classes-per-file: 0 */
 import axios, {
     AxiosRequestConfig,
     Method,
@@ -140,12 +138,10 @@ import axios, {
       return this.request<never, R>('POST', url, { data, ...config })
     }
   
-    public update<D extends BP, R extends BRN = BRN>(
-      id: string|number, data: D, config?: AxiosRequestConfig,
-    ) {
-      const path = this.hasFinishSlash ? `${id}/update/` : `${id}/update`
-      const [url] = this.getUrl(path, data)
-      return this.request<never, R>('POST', url, { data, ...config })
+    public update(data: Object, config?: AxiosRequestConfig) {
+      const path = this.hasFinishSlash ? `/update/` : `/update`
+      const [url] = this.getUrl(path)
+      return this.request('POST', url, { data, ...config })
     }
   
     public delete<R = BRN, P extends BP = BP>(
@@ -154,22 +150,6 @@ import axios, {
       const path = this.hasFinishSlash ? `${id}/delete/` : `${id}/delete`
       const [url] = this.getUrl(path, params)
       return this.request<never, R>('POST', url, config)
-    }
-  
-    public deleteMultiple<D extends BP, R extends BRN = BRN>(
-      data: D, config?: AxiosRequestConfig,
-    ) {
-      const path = this.hasFinishSlash ? 'delete/' : 'delete'
-      const [url] = this.getUrl(path, data)
-      return this.request<never, R>('POST', url, { data, ...config })
-    }
-  
-    public updatePositions<P extends BP = BP, R extends BRN = BRN>(
-      data: SortablePositions, params?: P, config?: AxiosRequestConfig,
-    ) {
-      const path = this.hasFinishSlash ? 'positions/' : 'positions'
-      const [url] = this.getUrl(path, params)
-      return this.request<never, R>('POST', url, { data, ...config })
     }
   }
   

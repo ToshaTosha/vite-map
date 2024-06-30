@@ -6,10 +6,9 @@
         role="combobox"
         :aria-expanded="open"
         class="w-[100%] justify-between"
-        @focus="() => {console.log('111')}"
       >
         {{ value
-          ? cityOptions.find((cityOptions) => cityOptions.value === value)?.label
+          ? cityOptions?.find((cityOptions) => cityOptions.value === value)?.label
           : "Выберите регион" }}
         <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
       </Button>
@@ -27,7 +26,6 @@
               @select="(ev) => {
                 if (typeof ev.detail.value === 'string') {
                   value = ev.detail.value
-                  console.log(ev.detail.value)
                   this.$emit('selected', ev.detail.value)
                 }
                 open = false
@@ -81,7 +79,6 @@ const props = defineProps({
     type: Array as () => Marker[],
   }
 });
-console.log(props)
 const open = ref(false)
 const value = ref('')
 </script>
