@@ -10,12 +10,12 @@
         <AccordionContent>
             <ScrollArea class="h-72 w-100 rounded-md border">
                 <div class="p-4">
-                <div v-for="tag in item.items" :key="tag">
-                    <div class="text-sm">
-                    {{ tag.uid }}
-                    </div>
-                    <Separator class="my-2" />
-                </div>
+                  <div v-for="tag in item.items" :key="tag">
+                      <div class="text-sm">
+                      {{ tag.uid }}
+                      </div>
+                      <Separator class="my-2" />
+                  </div>
                 </div>
             </ScrollArea>
         </AccordionContent>
@@ -25,7 +25,6 @@
 <script>
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import ScrollList from '@/components/ScrollList.vue'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { ClientsApi } from '@/modules/MapControlPanel/api/ClientsApi'
@@ -39,7 +38,6 @@ import { twMerge } from "tailwind-merge";
         AccordionContent,
         AccordionItem,
         AccordionTrigger,
-        ScrollList,
         ScrollArea,
         Separator
     },

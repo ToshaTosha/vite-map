@@ -1,17 +1,25 @@
 <template>
     <form class="w-100" @submit="onLoginSubmit">
-      <FormField v-slot="{ componentField }" name="long">
+      <FormField v-slot="{ componentField }" name="id">
         <FormItem v-auto-animate>
           <FormControl>
-            <Input type="number" placeholder="Долгота" v-bind="componentField" />
+            <Input disabled type="text" placeholder="Id" v-bind="componentField" class="mt-2" />
           </FormControl>
           <FormMessage />
         </FormItem>
       </FormField>
-      <FormField v-slot="{ componentField }" name="lat">
+      <FormField v-slot="{ componentField }" name="longitude">
         <FormItem v-auto-animate>
           <FormControl>
-            <Input type="number" placeholder="Широта" v-bind="componentField" class="my-2" />
+            <Input type="number" step="any" placeholder="Долгота" v-bind="componentField" class="mt-2" />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="latitude">
+        <FormItem v-auto-animate>
+          <FormControl>
+            <Input type="number" step="any" placeholder="Широта" v-bind="componentField" class="my-2" />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -23,7 +31,7 @@
   </template>
   
   <script setup lang="ts">
-  import { h } from 'vue'
+  import { h, watch } from 'vue'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
@@ -31,29 +39,44 @@
   import { Button } from '@/components/ui/button'
   import {
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
   } from '@/components/ui/form'
   import { Input } from '@/components/ui/input'
-  import { toast } from '@/components/ui/toast'
+  import { useStore } from 'vuex'
+  import { ClientsApi } from '@/modules/MapControlPanel/api/ClientsApi'
+  import { UpdateClientData } from '@/modules/MapControlPanel/api/ClientsApi'
+  
+  const { getters } = useStore()
+  const currentEditClient = getters.getCurrentEditClient
+
+  const initialValues = {
+    id: currentEditClient?.id || null,
+    longitude: currentEditClient?.longitude || 0,
+    latitude: currentEditClient?.latitude || 0,
+  }
   
   const formSchema = toTypedSchema(z.object({
-    long: z.number({ message: 'Зполните поле' }).gte(-180, { message: 'Значение должно быть не меньше -180' }).lte(180, { message: 'Значение должно быть не больше 180' }),
-    lat: z.number({ message: 'Зполните поле' }).gte(-90, { message: 'Значение должно быть не меньше -90' }).lte(90, { message: 'Значение должно быть не больше 90' }),
+    id: z.number({ message: 'Пустым id не может быть пустым' }).min(1, { message: 'Пустым id не может быть пустым' }),
+    longitude: z.number({ message: 'Зполните поле' }).gte(-180, { message: 'Значение должно быть не меньше -180' }).lte(180, { message: 'Значение должно быть не больше 180' }),
+    latitude: z.number({ message: 'Зполните поле' }).gte(-90, { message: 'Значение должно быть не меньше -90' }).lte(90, { message: 'Значение должно быть не больше 90' }),
   }))
   
-  const { handleSubmit } = useForm({
+  const { handleSubmit, setFieldValue } = useForm({
     validationSchema: formSchema,
+    initialValues,
+  })
+
+  watch(() => getters.getCurrentEditClient, (newValue) => {
+    setFieldValue("id", newValue.id)
+    setFieldValue("longitude", newValue.longitude)
+    setFieldValue("latitude", newValue.latitude)
   })
   
-  const onLoginSubmit = handleSubmit((values) => {
-    toast({
-      title: 'You submitted the following values:',
-      description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
-    })
+  const onLoginSubmit = handleSubmit((values: UpdateClientData) => {
+    const api = new ClientsApi()
+    api.updateClients(values)
   })
   </script>
   

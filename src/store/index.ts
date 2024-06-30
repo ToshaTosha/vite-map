@@ -12,7 +12,12 @@ export const store = new Vuex.Store({
       longitude: 104.280606,
       zoom: 10
     },
-    currentClients: []
+    currentClients: [],
+    currentEditClient: {
+      id: null,
+      latitude: 0,
+      longitude: 0
+    },
   },
   mutations: {
     updateCurrentCity(state, updatedCity) {
@@ -20,6 +25,9 @@ export const store = new Vuex.Store({
     },
     updateCurrentClients(state, updatedClients) {
       state.currentClients = { ...updatedClients };
+    },
+    updateCurrentEditClient(state, updatedCurrentEditClient) {
+      state.currentEditClient = { ...updatedCurrentEditClient };
     }
   },
   getters: {
@@ -28,6 +36,9 @@ export const store = new Vuex.Store({
     },
     getCurrentClients: state => {
       return state.currentClients;
+    },
+    getCurrentEditClient: state => {
+      return state.currentEditClient;
     },
   },
 });
