@@ -16,11 +16,6 @@ import axios, {
   }
 
   type BaseApiResponseCollection<T> = BaseApiResponse<T>[];
-
-  interface SortablePositions {
-    positions: { id: number; position: number }[];
-  }
-  
   
   const URL_PATTERN_OPTIONS = { segmentNameCharset: 'a-zA-Z0-9_-' }
   
@@ -44,8 +39,8 @@ import axios, {
     protected abstract readonly endpoint: string | ((params: number) => string);
   
     constructor(
-      protected readonly baseURL: string,
-      protected readonly endpointPrefix: string,
+      protected readonly baseURL = 'http://localhost:8005',
+      protected readonly endpointPrefix = '',
       protected readonly http = createAxiosInstance(baseURL),
       protected readonly hasFinishSlash = true,
     ){

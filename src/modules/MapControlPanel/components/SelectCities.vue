@@ -1,5 +1,5 @@
 <template>
-    <Popover v-model:open="open">
+  <Popover v-model:open="open">
     <PopoverTrigger as-child>
       <Button
         variant="outline"
@@ -15,8 +15,8 @@
     </PopoverTrigger>
     <PopoverContent class="w-[100%] p-0" style="z-index: 5000">
       <Command>
-        <CommandInput class="h-9" placeholder="Search cityOptions..." />
-        <CommandEmpty>No cityOptions found.</CommandEmpty>
+        <CommandInput class="h-9" placeholder="Поиск..." />
+        <CommandEmpty>Город не найден</CommandEmpty>
         <CommandList>
           <CommandGroup>
             <CommandItem
@@ -68,47 +68,46 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-  export default {
-    name: 'SelectCities',
-    components: {
-      Button,
-      Command,
-      CommandEmpty,
-      CommandGroup,
-      CommandInput,
-      CommandItem,
-      CommandList,
-      Popover,
-      PopoverContent,
-      PopoverTrigger,
-      Check,
-      ChevronsUpDown,
-    },
-    data() {
-      return { 
-        open: false,
-        file_name: '',
-        cityOptions: [],
+
+export default {
+  name: 'SelectCities',
+  components: {
+    Button,
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+  },
+  data() {
+    return { 
+      open: false,
+      file_name: '',
+      cityOptions: [],
+    }
+  },
+  created() {
+    this.fetchOptions()
+  },
+  methods: {
+    async fetchOptions () {
+      try {
+        const api = new CitiesApi()
+        const response = await api.getAll()
+        this.cityOptions = response.data
+      } catch (error) {
+        console.error(error);
       }
     },
-    created() {
-      this.fetchOptions()
-    },
-    methods: {
-      async fetchOptions () {
-        try {
-          const api = new CitiesApi()
-          const response = await api.getAll()
-          this.cityOptions = response.data
-        } catch (error) {
-          console.error(error);
-        }
-      },
-      cn(...inputs) {
-        return twMerge(clsx(inputs));
-      }
-    },
-  }
+    cn(...inputs) {
+      return twMerge(clsx(inputs));
+    }
+  },
+}
 </script>
 
 <style scoped>

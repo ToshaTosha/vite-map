@@ -1,4 +1,4 @@
-import { BaseLkPublicApi } from '@/api/BaseApi'
+import { BaseApi } from '@/api/BaseApi'
 
 export interface City {
   id: number,
@@ -14,7 +14,7 @@ export interface UserCollection extends City {
 }
 
 
-export class CitiesApi extends BaseLkPublicApi<City, UserCollection> {
+export class CitiesApi extends BaseApi<City, UserCollection> {
   protected readonly endpoint: string = '/cities';
   protected readonly hasFinishSlash = false;
   

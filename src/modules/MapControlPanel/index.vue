@@ -17,8 +17,7 @@ import {
 import { CitiesApi } from './api/CitiesApi'
 import { Separator } from '@/components/ui/separator'
 import SelectCities from '@/modules/MapControlPanel/components/SelectCities.vue'
-import ClientList from '@/modules/MapControlPanel/components/ClientList.vue';
-import LoginForm from './components/LoginForm.vue'
+import ClientList from '@/modules/MapControlPanel/components/ClientList.vue'
 import CoordinatesForm from './components/CoordinatesForm.vue'
 
 export default {
@@ -29,7 +28,6 @@ export default {
     Separator,
     SelectCities,
     ClientList,
-    LoginForm,
     CoordinatesForm,
   },
   created() {
