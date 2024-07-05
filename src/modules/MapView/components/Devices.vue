@@ -1,53 +1,46 @@
 <template>
-    <yandex-map-marker
-        v-for="marker in test"
-        :key="marker.iconSrc"
-        position="top-center left-center"
-        :settings="{ coordinates: marker.coordinates }"
-    >
-        <div class="pin">
-            <Icon :icon="'lucide:radio'" :color="'#ffffff'" class="size-4" />
-        </div>
-    </yandex-map-marker>
+  <yandex-map-marker
+    v-for="marker in devicesOptions"
+    :key="marker.iconSrc"
+    position="top-center left-center"
+    :settings="{ coordinates: [marker.longitude, marker.latitude] }"
+  >
+    <div class="pin">
+      <Icon :icon="'lucide:radio'" :color="'#ffffff'" class="size-4" />
+    </div>
+  </yandex-map-marker>
 </template>
       
 <script>
 
-import {
-  YandexMap,
-  YandexMapDefaultFeaturesLayer,
-  YandexMapDefaultSchemeLayer,
-  YandexMapMarker,
-} from 'vue-yandex-maps'
-import MapCluster from '@/modules/MapView/components/MapCluster.vue'
+import { YandexMapMarker } from 'vue-yandex-maps'
+import { DevicesApi } from '../api/DevicesApi';
 import { Icon } from '@iconify/vue'
 
 export default {
   name: 'Devices',
   components: {
-    YandexMap,
-    YandexMapDefaultFeaturesLayer,
-    YandexMapDefaultSchemeLayer,
-    MapCluster,
     YandexMapMarker,
     Icon,
   },
   data() {
-    return { 
-      center: [this.$store.state.currentCity.longitude, this.$store.state.currentCity.latitude],
-      zoom: 3,
-      test: [
-    {
-        coordinates: [37.623, 55.752],
-    },
-    {
-        coordinates: [38.125, 55.622],
-    },
-    {
-        coordinates: [37.295, 55.415],
-    },
-  ]
+    return {
+      devicesOptions: []
     }
+  },
+  created() {
+    this.fetchDevices()
+  },
+  methods: {
+    async fetchDevices () {
+      try {
+        const api = new DevicesApi()
+        const response = await api.getAll()
+        this.devicesOptions = response.data
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 }
 </script>

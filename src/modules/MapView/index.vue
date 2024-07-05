@@ -11,7 +11,7 @@
     <yandex-map-default-scheme-layer />
     <yandex-map-default-features-layer />
     <MapCluster />
-    <Devices />
+    <Devices v-if="$store.state.isDevicesView"/>
   </yandex-map>
 </template>
     
@@ -24,8 +24,7 @@ import {
   YandexMapMarker,
 } from 'vue-yandex-maps'
 import MapCluster from '@/modules/MapView/components/MapCluster.vue'
-import Devices from '@/modules/MapView/components/Devices.vue';
-import { Icon } from '@iconify/vue'
+import Devices from '@/modules/MapView/components/Devices.vue'
 
 export default {
   name: 'MapView',
@@ -40,24 +39,7 @@ export default {
   data() {
     return { 
       center: [this.$store.state.currentCity.longitude, this.$store.state.currentCity.latitude],
-      zoom: 3,
-      test: [
-    {
-        coordinates: [37.623, 55.752],
-        iconSrc:
-            'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
-    },
-    {
-        coordinates: [38.125, 55.622],
-        iconSrc:
-            'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
-    },
-    {
-        coordinates: [37.295, 55.415],
-        iconSrc:
-            'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
-    },
-  ]
+      zoom: this.$store.state.currentCity.zoom,
     }
   },
   methods: {

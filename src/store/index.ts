@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import Vuex from 'vuex';
 
 export const store = new Vuex.Store({
@@ -18,6 +17,7 @@ export const store = new Vuex.Store({
       latitude: 0,
       longitude: 0
     },
+    isDevicesView: true,
   },
   mutations: {
     updateCurrentCity(state, updatedCity) {
@@ -28,7 +28,10 @@ export const store = new Vuex.Store({
     },
     updateCurrentEditClient(state, updatedCurrentEditClient) {
       state.currentEditClient = { ...updatedCurrentEditClient };
-    }
+    },
+    updateIsDevicesView(state) {
+      state.isDevicesView = !state.isDevicesView
+    },
   },
   getters: {
     getCurrentCity: state => {
